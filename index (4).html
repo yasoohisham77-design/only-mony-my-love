@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To My Love, Mony ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:ital,wght@0,300;0,400;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #ff4d6d;
+            --secondary-color: #ff758f;
+            --dark-color: #c9184a;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #fff0f3, #ffe0e6, #fff, #ffebee);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #start-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .start-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid var(--primary-color);
+            padding: 20px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { box-shadow: 0 0 0 0 rgba(255, 77, 109, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 77, 109, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 77, 109, 0); }
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 380px;
+            height: 250px;
+            background-color: var(--secondary-color);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            z-index: 10;
+            /* تم زيادة الهامش العلوي هنا لترك مساحة للورقة */
+            margin-top: 120px; 
+            margin-bottom: 40px;
+            transition: transform 0.6s ease;
+        }
+
+        .envelope-wrapper::after {
+            content: "";
+            position: absolute;
+            z-index: 30;
+            width: 0; height: 0;
+            border-top: 125px solid transparent;
+            border-right: 190px solid var(--secondary-color);
+            border-bottom: 125px solid var(--dark-color);
+            border-left: 190px solid var(--secondary-color);
+            border-radius: 0 0 10px 10px;
+        }
+
+        .flap {
+            position: absolute;
+            top: 0; width: 0; height: 0;
+            border-top: 135px solid var(--primary-color);
+            border-left: 190px solid transparent;
+            border-right: 190px solid transparent;
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 40;
+        }
+
+        .letter {
+            position: absolute;
+            bottom: 5px; left: 15px;
+            width: 350px; height: 230px;
+            background-color: #fffafb;
+            /* تم زيادة الـ padding العلوي هنا */
+            padding: 40px 25px 20px 25px; 
+            box-sizing: border-box;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 20;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid #ffe0e6;
+        }
+
+        .letter h1 { 
+            color: var(--primary-color); 
+            font-size: 28px; 
+            margin: 0 0 10px 0; 
+            font-family: 'Dancing Script', cursive; 
+        }
+        
+        .letter p { 
+            color: #4a4a4a; 
+            font-size: 13px; 
+            line-height: 1.5; 
+            margin: 0; 
+            font-style: italic; 
+            font-weight: 300;
+        }
+
+        .envelope-wrapper.open { transform: translateY(40px); }
+        .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 35; } 
+        .envelope-wrapper.open .letter { transform: translateY(-210px) scale(1.05); z-index: 50; box-shadow: 0 20px 40px rgba(0,0,0,0.1); } 
+
+        .timers-container { display: flex; gap: 20px; z-index: 10; margin-bottom: 50px; }
+        .timer-box { 
+            background: rgba(255, 255, 255, 0.6); 
+            backdrop-filter: blur(8px);
+            padding: 15px; 
+            border-radius: 15px; 
+            border: 1px solid rgba(255, 77, 109, 0.3); 
+            width: 160px; 
+            text-align: center; 
+        }
+        .timer-title { font-size: 11px; font-weight: 600; color: var(--dark-color); margin-bottom: 5px; text-transform: uppercase; }
+        .timer-val { font-size: 15px; font-weight: bold; color: var(--primary-color); font-family: monospace; }
+
+        .footer-signature { position: absolute; bottom: 20px; font-size: 12px; color: var(--dark-color); opacity: 0.7; }
+        .floating-heart { position: absolute; bottom: -50px; user-select: none; pointer-events: none; z-index: 1; animation: moveHearts linear infinite; }
+        
+        @keyframes moveHearts { 
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; } 
+        }
+
+        #music-toggle {
+            position: fixed;
+            top: 20px; right: 20px;
+            width: 40px; height: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 18px;
+            color: var(--primary-color);
+            border: 1px solid rgba(255, 77, 109, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen" onclick="startExperience()">
+        <div class="start-btn">
+            <h2>Hey Mony ❤️</h2>
+            <p>Tap to open your surprise</p>
+        </div>
+    </div>
+
+    <div id="music-toggle" style="display: none;" onclick="toggleAudio()">🎵</div>
+
+    <audio id="loveSong" loop>
+        <source src="https://docs.google.com/uc?export=download&id=1q6qli73VX6rlAMVdRfM4VXqu7xOy5Hzy" type="audio/mpeg">
+    </audio>
+
+    <div class="envelope-wrapper" id="envelope" onclick="this.classList.toggle('open')">
+        <div class="flap"></div>
+        <div class="letter">
+            <h1>For my Mony</h1>
+            <p>
+                Since you entered my life, I fell in love with everything in it. I always wish to make things easier for you, just like you make everything easier for me. I want you to know that if they gave me a choice every single day between you and anyone else, I would choose you every time even before knowing who that other person is. I don't want anyone in my life but you.                                    
+            </p>
+        </div>
+    </div>
+
+    <div class="timers-container">
+        <div class="timer-box">
+            <div class="timer-title">Confessed Love</div>
+            <div id="timer1" class="timer-val">0d 0h 0m 0s</div>
+        </div>
+        <div class="timer-box">
+            <div class="timer-title">First Talk</div>
+            <div id="timer2" class="timer-val">0d 0h 0m 0s</div>
+        </div>
+    </div>
+
+    <div class="footer-signature">Made with all my love by Yasin ❤️‍🔥✨</div>
+
+    <script>
+        const song = document.getElementById("loveSong");
+        const musicToggle = document.getElementById("music-toggle");
+        let isPlaying = false;
+
+        function startExperience() {
+            const startScreen = document.getElementById("start-screen");
+            song.play().then(() => {
+                isPlaying = true;
+                musicToggle.innerText = "⏸️";
+            }).catch(e => {
+                musicToggle.innerText = "🎵";
+            });
+            musicToggle.style.display = "flex";
+            startScreen.style.opacity = "0";
+            setTimeout(() => startScreen.style.display = "none", 800);
+        }
+
+        function toggleAudio() {
+            if (isPlaying) {
+                song.pause();
+                musicToggle.innerText = "🎵";
+            } else {
+                song.play();
+                musicToggle.innerText = "⏸️";
+            }
+            isPlaying = !isPlaying;
+        }
+
+        const date1 = new Date("February 9, 2026 21:44:00").getTime();
+        const date2 = new Date("January 8, 2026 16:19:00").getTime();
+
+        function updateTimers() {
+            const now = new Date().getTime();
+            function calcTime(target) {
+                const diff = Math.abs(target - now);
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+                return `${d}d ${h.toString().padStart(2, '0')}h ${m.toString().padStart(2, '0')}m ${s.toString().padStart(2, '0')}s`;
+            }
+            document.getElementById("timer1").innerHTML = calcTime(date1);
+            document.getElementById("timer2").innerHTML = calcTime(date2);
+        }
+        setInterval(updateTimers, 1000);
+        updateTimers();
+
+        function createFloatingHearts() {
+            const symbols = ['❤️', '💖', '✨', '💕', '🤍'];
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+            heart.style.fontSize = (Math.random() * 15 + 10) + "px";
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+        setInterval(createFloatingHearts, 400);
+    </script>
+</body>
+</html>
